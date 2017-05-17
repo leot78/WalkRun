@@ -96,11 +96,6 @@ public class MainActivity extends AppCompatActivity {
         Log.i("main","dist="+all_distance);
         Log.i("main","time="+all_time_elapse);
         Intent intent = new Intent(MainActivity.this, SummaryAcitvity.class);
-        /*intent.putExtra("list",time_list);
-        intent.putExtra("av_speed",av_speed);
-        intent.putExtra("all_dist",all_distance);
-        intent.putExtra("time", all_time_elapse);*/
-        //intent.putExtra("locList", locArrayList);
         Tracking tracking = new Tracking();
         tracking.setLocations(locArrayList);
         intent.putExtra("tracking",tracking);
