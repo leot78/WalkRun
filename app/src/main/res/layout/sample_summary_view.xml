@@ -1,0 +1,85 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/summary_view">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:text="@string/tv_name"/>
+
+    <com.example.antoine.walkrun.SummaryView
+        android:id="@+id/sum_view"
+        android:layout_below="@id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+
+
+    <TextView
+        android:layout_below="@id/sum_view"
+        android:id="@+id/sum_tv_av"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/tv_average_speed" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/sum_tv_av"
+        android:id="@+id/sum_tv_dist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/tv_dist"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/sum_tv_dist"
+        android:id="@+id/sum_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/tv_time"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_save"
+            android:onClick="clickSave"/>
+
+        <Button
+            android:id="@+id/btn_share"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_share"
+            android:onClick="clickShare"
+            android:enabled="false"/>
+
+        <Button
+            android:id="@+id/btn_map"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/title_activity_maps"
+            android:enabled="false"
+            android:onClick="clickMap"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

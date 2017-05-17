@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WalkRun</string>
+    <string name="tv_speed">Speed : N/A</string>
+    <string name="tv_average_speed">Average speed : N/A</string>
+    <string name="tv_time">Time : </string>
+    <string name="btn_start">Start Activity</string>
+    <string name="btn_stop">Stop Activity</string>
+    <string name="tv_dist">Distance : N/A</string>
+    <string name="btn_share">Share GPX</string>
+    <string name="btn_save">Save</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="btn_open">Open activity…</string>
+    <string name="tv_name">(No name)</string>
+    <string name="it_delete">Delete</string>
+</resources>
