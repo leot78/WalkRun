@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -73,12 +74,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng end = listLatLng.get(listLatLng.size()-1);
 
         Pair<Integer,Integer> limit = mostDistantPoint(locationArrayList);
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        builder.include(listLatLng.get(limit.first));
-        builder.include(listLatLng.get(limit.second));
-        LatLngBounds bnds = builder.build();
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bnds,100));
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        if(!limit.first.equals(limit.second)) {
+            builder.include(listLatLng.get(limit.first));
+            builder.include(listLatLng.get(limit.second));
+        } else {
+            builder.include(start);
+            builder.include(end);
+        }
+        LatLngBounds bnds = builder.build();
+        Log.i("BOUNDS",bnds.toString());
+
         mMap.addMarker(new MarkerOptions()
                 .position(start)
                 .title("Start")
@@ -90,12 +97,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         PolylineOptions options = new PolylineOptions().addAll(listLatLng);
         Polyline polyline = mMap.addPolyline(options);
+
+        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                Pair<Integer,Integer> limit = mostDistantPoint(locationArrayList);
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                builder.include(listLatLng.get(limit.first));
+                builder.include(listLatLng.get(limit.second));
+                LatLngBounds bnds = builder.build();
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bnds,100));
+            }
+        });
     }
 
     private ArrayList<LatLng> LocToLatLng(ArrayList<Location> list){
         ArrayList<LatLng> res = new ArrayList<>();
-        for (Location loc :
-                list) {
+        for (Location loc : list) {
             res.add(new LatLng(loc.getLatitude(), loc.getLongitude()));
         }
         return res;

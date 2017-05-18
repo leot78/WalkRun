@@ -179,9 +179,16 @@ public class SummaryAcitvity extends AppCompatActivity {
     }
 
     public void clickShare(View view){
+        File filetoShare=new File("");
+        if(SOURCE_ACTIVITY.equals(ListActivity.class.getName())){
+            filetoShare = new File(getExternalFilesDir(null),tracking.getPath()+".gpx");
+        } else {
+            filetoShare = file;
+        }
+        Log.i("FILE",filetoShare.toString());
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(filetoShare));
         shareIntent.setType("*/*");
         startActivity(Intent.createChooser(shareIntent,"Choose an app to share GPX file"));
 
