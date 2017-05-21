@@ -1,5 +1,7 @@
 package com.example.antoine.walkrun;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -41,6 +43,14 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Dialog(trackingList.get(position));
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -72,6 +82,26 @@ public class ListActivity extends AppCompatActivity {
         c.close();
         trackingAdapater = new TrackingAdapater(this,trackingList);
         listView.setAdapter(trackingAdapater);
+    }
+
+    public void Dialog(final Tracking tracking){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete activity ?");
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MainActivity.DB.deleteActivity(tracking.getPath());
+                UpdateListView();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
+
+        builder.create().show();
     }
 
 
