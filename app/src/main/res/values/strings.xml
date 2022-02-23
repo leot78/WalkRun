@@ -12,4 +12,7 @@
     <string name="btn_open">Open activity…</string>
     <string name="tv_name">(No name)</string>
     <string name="it_delete">Delete</string>
+    <string name="default_speed">Speed : 0,00 km/h</string>
+    <string name="default_average_speed">Average speed : 0,00 km/h</string>
+    <string name="default_distance">Distance : 0,00 km</string>
 </resources>

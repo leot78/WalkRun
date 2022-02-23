@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WalkRun.iml" filepath="$PROJECT_DIR$/WalkRun.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/WalkRun.iml" filepath="$PROJECT_DIR$/.idea/modules/WalkRun.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/WalkRun.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/WalkRun.app.iml" />
     </modules>
   </component>
 </project>

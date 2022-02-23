@@ -1,6 +1,7 @@
 package com.example.antoine.walkrun;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,10 +9,10 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.SystemClock;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import android.os.Bundle;
-import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +20,6 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -76,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
         last_loc =null;
         all_distance =0;
         last_kDistance =0;
-        time_list = new ArrayList<Long>();
-        locArrayList = new ArrayList<Location>();
+        time_list = new ArrayList<>();
+        locArrayList = new ArrayList<>();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         addLocationListener();
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("main","dist="+all_distance);
         Log.i("main","time="+all_time_elapse);
-        Intent intent = new Intent(MainActivity.this, SummaryAcitvity.class);
+        Intent intent = new Intent(MainActivity.this, SummaryActivity.class);
         Tracking tracking = new Tracking();
         tracking.setLocations(locArrayList);
         intent.putExtra("tracking",tracking);
@@ -120,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LocationListener createLocListener(){
         return new LocationListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onLocationChanged(Location location) {
                 locArrayList.add(location);
@@ -130,16 +130,17 @@ public class MainActivity extends AppCompatActivity {
                     chrono.start();
                     last_loc = location;
                     last_time = curTime;
-                    tv_speed.setText("Speed : 0,00 km/h");
-                    tv_av_speed.setText("Average speed : 0,00 km/h");
-                    tv_dist.setText("Distance : 0,00 km");
+                    tv_speed.setText(R.string.default_speed);
+                    tv_av_speed.setText(R.string.default_average_speed);
+                    tv_dist.setText(R.string.default_distance);
                 } else {
 
                     float distance = location.distanceTo(last_loc);
 
                     long time_elapse = curTime - last_time;
                     float speed = (distance / time_elapse) * 3600.f;
-                    tv_speed.setText("Speed : " + String.format("%.2f", speed) + " km/h");
+                    tv_speed.setText("Speed : " + String.format("%.2f",
+                            speed) + " km/h");
 
                     all_distance = all_distance + distance;
                     all_time_elapse = curTime - chrono.getBase();

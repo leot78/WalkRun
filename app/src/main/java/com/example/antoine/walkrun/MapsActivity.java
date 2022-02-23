@@ -3,10 +3,12 @@ package com.example.antoine.walkrun;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.location.Location;
-import android.support.v4.app.FragmentActivity;
+
 import android.os.Bundle;
-import android.support.v4.util.Pair;
 import android.util.Log;
+import android.util.Pair;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
 
@@ -86,28 +89,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLngBounds bnds = builder.build();
         Log.i("BOUNDS",bnds.toString());
 
-        mMap.addMarker(new MarkerOptions()
-                .position(start)
-                .title("Start")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-        mMap.addMarker(new MarkerOptions()
-                .position(end)
-                .title("Finish")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+        mMap.setOnMapLoadedCallback(() -> {
+            Pair<Integer,Integer> limit1 = mostDistantPoint(locationArrayList);
+            LatLngBounds.Builder builder1 = new LatLngBounds.Builder();
+            builder1.include(listLatLng.get(limit1.first));
+            builder1.include(listLatLng.get(limit1.second));
+            LatLngBounds bnds1 = builder1.build();
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bnds1,100));
+            mMap.addMarker(new MarkerOptions()
+                    .position(start)
+                    .title("Start")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+            mMap.addMarker(new MarkerOptions()
+                    .position(end)
+                    .title("Finish")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
-        PolylineOptions options = new PolylineOptions().addAll(listLatLng);
-        Polyline polyline = mMap.addPolyline(options);
-
-        mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
-            @Override
-            public void onMapLoaded() {
-                Pair<Integer,Integer> limit = mostDistantPoint(locationArrayList);
-                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                builder.include(listLatLng.get(limit.first));
-                builder.include(listLatLng.get(limit.second));
-                LatLngBounds bnds = builder.build();
-                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bnds,100));
-            }
+            PolylineOptions options = new PolylineOptions().addAll(listLatLng);
+            mMap.addPolyline(options);
         });
     }
 
